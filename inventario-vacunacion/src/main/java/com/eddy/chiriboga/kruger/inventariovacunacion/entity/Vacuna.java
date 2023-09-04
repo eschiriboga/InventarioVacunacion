@@ -11,7 +11,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Vacuna {
+@Table(name = "Vacuna")
+public class Vacuna implements Serializable{
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

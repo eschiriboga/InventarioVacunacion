@@ -1,5 +1,6 @@
 package com.eddy.chiriboga.kruger.inventariovacunacion.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,34 +10,31 @@ import java.util.Date;
 import java.util.List;
 
 
-@Getter
-@Setter
 @Entity
+@Getter @Setter
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long usuarioId;
-    @NotBlank(message = "El campo cedula es requerida")
+
     @NotNull(message = "El campo cedula no puede ser nulo")
     @Pattern(regexp = "\\d+", message = "El campo cedula debe contener solo números")
+    @Size(min = 10, max = 10, message = "El número de cédula debe tener 10 digitos")
     private String cedula;
 
-    @NotBlank(message = "El campo nombre es requerido")
+
     @NotNull(message = "El campo nombre no puede ser nulo")
     @Pattern(regexp = "^[a-zA-Z]+$", message = "El campo Nombre solo debe contener letras")
     private String nombre;
 
-    @NotBlank(message = "El campo nombre es requerido")
     @NotNull(message = "El campo nombre no puede ser nulo")
     @Pattern(regexp = "^[a-zA-Z]+$", message = "El campo Apellido solo debe contener letras")
     private String apellido;
 
-    @NotBlank(message = "El campo email es requerido")
     @NotNull(message = "El campo email no puede ser nulo")
     @Email(message = "Correo no válido")
     private String correo;
-
     private Date fechaNacimiento;
     private String direccionDomicilio;
     private String telefonoMovil;
@@ -47,9 +45,9 @@ public class Usuario {
     @JoinColumn(name = "roleId")
     private Rol rol;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "usuario_id")
-    private List<UsuarioVacuna> vacunas;
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "usuario_id")
+//    private List<UsuarioVacuna> vacunas;
 
 
 }

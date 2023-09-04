@@ -1,5 +1,6 @@
 package com.eddy.chiriboga.kruger.inventariovacunacion.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +20,12 @@ public class UsuarioVacuna  {
     private Integer dosis;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vacunaId")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JoinColumn(name = "vacunaId")
     private Vacuna vacuna;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuarioId")
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Usuario usuario;
 }

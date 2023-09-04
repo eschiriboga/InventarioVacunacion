@@ -2,18 +2,23 @@ package com.eddy.chiriboga.kruger.inventariovacunacion.controller;
 
 import com.eddy.chiriboga.kruger.inventariovacunacion.entity.Usuario;
 import com.eddy.chiriboga.kruger.inventariovacunacion.service.UsuarioService;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/api")
 public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
+
     @GetMapping
     public ResponseEntity<List<Usuario>> getAllUsuarios() {
         List<Usuario> usuarios = usuarioService.getAllUsuarios();
@@ -31,15 +36,22 @@ public class UsuarioController {
 
 
     }
+    /**
+     * Para empezar de crean usuarios, solo los Administradores pueden crear usuarios
+     * Se registraran la cedula, nombre,apellido y correo electronico
+     * del empleado.
+     * El username se crea: se forma con el nombre y apellido del usuario
+     * El password se genera solo y esta encriptado.
+     */
     @PostMapping("/creat/empleado")
-    public ResponseEntity<Object> createUsuario(@RequestBody Usuario usuario) {
+    public ResponseEntity<Object> createUsuario(@Valid @RequestBody Usuario usuario) {
         Usuario usuarioNuevo = new Usuario();
         usuarioNuevo.setCedula(usuario.getCedula());
         usuarioNuevo.setNombre(usuario.getNombre());
         usuarioNuevo.setApellido(usuario.getApellido());
         usuarioNuevo.setCorreo(usuario.getCorreo());
         usuarioNuevo.setNombreUsuario(usuario.getNombre()+"_"+usuario.getApellido());
-        usuarioNuevo.setPassword("12345");
+        usuarioNuevo.setPassword(UUID.randomUUID().toString().substring(0, 8));
         Usuario createdUsuario = usuarioService.creatUsuario(usuarioNuevo);
         if (createdUsuario != null) {
             return ResponseEntity.status(HttpStatus.CREATED).body(createdUsuario);
