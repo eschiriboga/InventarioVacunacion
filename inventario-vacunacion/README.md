@@ -1,4 +1,4 @@
-# test-kruger-backend-inv-vacuna
+# Test-Kruguer-Inventario-Vacunacion
 El siguiente repositorio contiene la resolucion del ejercicio propuesto por kruger coorp.
 
 # Autor
